@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.qingying0.im.mapper.UserSessionMapper">
+
+    <update id="updateUnreadnumZeroBySessionIdAndUserId">
+        update user_session
+        set unread_num = 0
+        where session_id = #{sessionId} and owner_id = #{userId}
+    </update>
+    <update id="updateNickname">
+        update user_session
+        set nickname = #{nickname}
+        where target_id = #{targetId} and owner_id = {sendId}
+    </update>
+    <update id="updateBySendMessage">
+        update user_session
+        set content = #{message.content},
+          update_time = #{message.createTime,jdbcType=TIMESTAMP},
+          unread_num = 0
+        where session_id = #{message.sessionId} and owner_id = #{message.sendId}
+    </update>
+    <update id="updateUnreadNumAdd">
+        update user_session
+        set unread_num = unread_num + 1
+        where session_id = #{sessionId} and owner_id = #{ownerId}
+    </update>
+    <update id="updateByReceivedMessage">
+        update user_session
+        set content = #{message.content},
+          update_time = #{message.createTime,jdbcType=TIMESTAMP},
+          unread_num = nuread_num + 1
+        where session_id = #{message.sessionId} and owner_id = #{message.targetId}
+    </update>
+    <update id="updateContent">
+        update user_session
+        set content = #{message.content},
+          update_time = #{message.createTime,jdbcType=TIMESTAMP}
+        where session_id = #{message.sessionId} and owner_id = #{message.targetId}
+    </update>
+    <select id="selectByOwnerId" resultType="com.github.qingying0.im.entity.UserSession">
+        select *
+        from user_session
+        where owner_id = #{userId}
+    </select>
+</mapper>

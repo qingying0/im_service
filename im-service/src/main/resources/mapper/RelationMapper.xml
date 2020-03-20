@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.qingying0.im.mapper.RelationMapper">
+    <resultMap id="FriendDTOMap" type="com.github.qingying0.im.dto.FriendDTO" >
+        <result column="id" property="id" jdbcType="BIGINT" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="sex" jdbcType="BIT" property="sex" />
+    </resultMap>
+    <select id="selectByUserId" resultMap="FriendDTOMap">
+        select u.id as id, username, avatar_url, description, u.create_time as create_time, sex
+        from relation r
+        left join users u
+        on r.`friend_id` = u.`id`
+        where r.`user_id` = #{userId}
+    </select>
+</mapper>
