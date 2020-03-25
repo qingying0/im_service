@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -117,5 +118,9 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         return userInfoDTO;
     }
 
-
+    @Override
+    public List<UserDTO> search(String search) {
+        search = "%" + search + "%";
+        return usersMapper.selectBySearch(search);
+    }
 }

@@ -18,6 +18,8 @@ public interface IUserSessionService extends IService<UserSession> {
 
     void saveUserSession(Long user1Id, Long user2Id);
 
+    void saveUserGroupSession(Long userId, Long groupId, String username, String groupName);
+
     List<UserSession> getUserSession();
 
     void updateUserUnreadnumZero(Long sessionId);

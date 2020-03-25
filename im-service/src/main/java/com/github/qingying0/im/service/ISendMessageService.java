@@ -5,4 +5,6 @@ import com.github.qingying0.im.entity.Message;
 
 public interface ISendMessageService {
     MessageDTO sendMessage(Message message);
+
+    MessageDTO sendGroupMessage(Message message);
 }

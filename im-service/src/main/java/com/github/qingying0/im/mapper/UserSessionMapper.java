@@ -34,4 +34,7 @@ public interface UserSessionMapper extends BaseMapper<UserSession> {
     List<UserSession> selectByOwnerId(Long userId);
 
     void updateContent(@Param("message")Message message);
+
+    Long selectByGroupId(Long groupId);
+
 }

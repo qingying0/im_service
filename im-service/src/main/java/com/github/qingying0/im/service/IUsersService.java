@@ -5,6 +5,8 @@ import com.github.qingying0.im.dto.UserDTO;
 import com.github.qingying0.im.dto.UserInfoDTO;
 import com.github.qingying0.im.entity.Users;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -20,4 +22,7 @@ public interface IUsersService extends IService<Users> {
     void register(Users user);
 
     UserInfoDTO getUserById(Long id);
+
+    List<UserDTO> search(String search);
+
 }

@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.qingying0.im.mapper.RequestMapper">
-
+    <resultMap id="requestDTOMap" type="com.github.qingying0.im.dto.RequestDTO" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectBySendIdAndTargetId" resultType="com.github.qingying0.im.entity.Request">
+        SELECT id, send_id, target_id, content, create_time, type, status
+        FROM request
+        WHERE send_id = #{sendId} AND target_id = #{targetId}
+    </select>
+    <select id="selectByTargetId" resultMap="requestDTOMap">
+        SELECT r.id AS id, username, avatar_url, content, TYPE, r.`status` as status
+        FROM request r
+        LEFT JOIN users u
+        ON r.send_id = u.id
+        WHERE r.target_id = #{targetId};
+    </select>
 </mapper>

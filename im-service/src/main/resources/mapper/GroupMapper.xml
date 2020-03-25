@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.qingying0.im.mapper.GroupMapper">
+
+    <insert id="insertUserGroup">
+        INSERT INTO user_group
+        (user_id, group_id)
+        VALUES (#{userId}, #{groupId});
+    </insert>
+    <select id="selectUserIdByGroupId" resultType="java.lang.Long">
+        SELECT user_id
+        FROM user_group
+        WHERE group_id = #{groupId};
+    </select>
+    <select id="selectGroupByUserId" resultType="com.github.qingying0.im.entity.GroupChat">
+        SELECT gc.*
+        FROM user_group AS ug
+        LEFT JOIN
+        group_chat AS gc
+        ON gc.`id` = ug.`group_id`
+        WHERE ug.`user_id` = #{useId};
+    </select>
+</mapper>

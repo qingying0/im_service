@@ -21,4 +21,10 @@ public class MessageController {
         MessageDTO sendMessage = messageService.sendMessage(message);
         return ResultDTO.okOf(sendMessage);
     }
+
+    @PostMapping("/groupMessage")
+    public ResultDTO sendGroupMessage(Message message) {
+        MessageDTO sendMessage = messageService.sendGroupMessage(message);
+        return ResultDTO.okOf(sendMessage);
+    }
 }

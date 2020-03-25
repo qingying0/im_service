@@ -1,8 +1,11 @@
 package com.github.qingying0.im.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.qingying0.im.dto.UserDTO;
 import com.github.qingying0.im.entity.Users;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UsersMapper extends BaseMapper<Users> {
 
+    List<UserDTO> selectBySearch(String search);
 }

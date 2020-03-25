@@ -57,7 +57,7 @@ public class SendMessageHandler {
         int tryTime = 2;
         Map map = channel.attr(OnlineHandler.NON_ACKED_MAP).get();
         try {
-            Thread.sleep(2000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

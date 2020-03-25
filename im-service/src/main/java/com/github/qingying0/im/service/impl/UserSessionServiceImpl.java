@@ -5,20 +5,24 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.qingying0.im.component.HostHolder;
 import com.github.qingying0.im.dao.RedisDao;
 import com.github.qingying0.im.dto.UserInfoDTO;
+import com.github.qingying0.im.entity.GroupChat;
 import com.github.qingying0.im.entity.Message;
 import com.github.qingying0.im.entity.UserSession;
 import com.github.qingying0.im.entity.Users;
 import com.github.qingying0.im.mapper.UserSessionMapper;
+import com.github.qingying0.im.service.IGroupService;
 import com.github.qingying0.im.service.IUserSessionService;
 import com.github.qingying0.im.service.IUsersService;
 import com.github.qingying0.im.utils.IdWorker;
 import com.github.qingying0.im.utils.RedisKeyUtils;
 import com.github.qingying0.im.utils.SystemConst;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,6 +50,12 @@ public class UserSessionServiceImpl extends ServiceImpl<UserSessionMapper, UserS
 
     @Autowired
     private RedisDao redisDao;
+
+    @Autowired
+    private IGroupService groupService;
+
+    @Autowired
+    private IUsersService usersService;
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
@@ -122,4 +132,25 @@ public class UserSessionServiceImpl extends ServiceImpl<UserSessionMapper, UserS
             userSessionMapper.updateContent(message);
         }
     }
+
+    @Override
+    public void saveUserGroupSession(Long userId, Long groupId, String username, String groupName) {
+        Long sessionId = userSessionMapper.selectByGroupId(groupId);
+        if(sessionId == null) {
+            sessionId = idWorker.nextId();
+        }
+        UserSession userSession = new UserSession();
+        userSession.setId(idWorker.nextId());
+        userSession.setOwnerId(userId);
+        userSession.setTargetId(groupId);
+        userSession.setNickname(groupName);
+        userSession.setIsMuted(false);
+        userSession.setSessionId(sessionId);
+        userSession.setStatus(SystemConst.SESSION_ON);
+        userSession.setSessionType(SystemConst.SESSION_TYPE_GROUP);
+        userSession.setContent(username + "加入聊天");
+        userSession.setCreateTime(new Date());
+        userSessionMapper.insert(userSession);
+    }
+
 }

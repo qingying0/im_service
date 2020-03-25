@@ -42,4 +42,9 @@
         from user_session
         where owner_id = #{userId}
     </select>
+    <select id="selectByGroupId" resultType="java.lang.Long">
+        SELECT session_id
+        FROM user_session
+        WHERE target_id = #{targetId} AND session_type = 1 LIMIT 1;
+    </select>
 </mapper>

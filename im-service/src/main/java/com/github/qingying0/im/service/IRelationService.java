@@ -20,4 +20,6 @@ public interface IRelationService extends IService<Relation> {
     List<FriendDTO> getFriends();
 
     Relation getByUserAndFriend(Long userId, Long targetId);
+
+    void saveRelation(Long sendId, Long targetId);
 }
