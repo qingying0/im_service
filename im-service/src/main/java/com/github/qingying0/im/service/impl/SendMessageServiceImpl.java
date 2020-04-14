@@ -49,18 +49,7 @@ public class SendMessageServiceImpl implements ISendMessageService {
     public MessageDTO sendGroupMessage(Message message) {
         message.setCreateTime(new Date());
         MessageDTO messageDTO = getMessageDTO(message);
-        Long groupId = message.getTargetId();
-        List<Long> groupUserId = groupService.getUserIdByGroupId(groupId);
-        for(Long userId : groupUserId) {
-            if(userId.equals(hostHolder.getUser().getId())){
-                continue;
-            }
-            messageDTO.setId(idWorker.nextId());
-            messageDTO.setTargetId(userId);
-            sender.send(RabbitMQSender.IM_MESSAGE, JSON.toJSONString(messageDTO));
-            userSessionService.updateSessionBySendMessage(message);
-            userSessionService.updateSessionByReceivedMessage(message);
-        }
+        sender.send(RabbitMQSender.IM_GROUP_MESSAGE, JSON.toJSONString(messageDTO));
         return messageDTO;
     }
 

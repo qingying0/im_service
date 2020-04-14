@@ -3,6 +3,7 @@ package com.github.qingying0.im;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.qingying0.im.utils.IdWorker;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,10 +15,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @SpringBootApplication
 @MapperScan("com.github.qingying0.im.mapper")
-public class PushSystemApplication {
+public class IMApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PushSystemApplication.class, args);
+        SpringApplication.run(IMApplication.class, args);
     }
 
     @Bean
@@ -46,6 +47,11 @@ public class PushSystemApplication {
         template.afterPropertiesSet();
 
         return template;
+    }
+
+    @Bean
+    public IdWorker idWorker() {
+        return new IdWorker(1, 1);
     }
 
 }

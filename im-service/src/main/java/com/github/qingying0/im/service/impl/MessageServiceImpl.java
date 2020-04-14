@@ -1,6 +1,5 @@
 package com.github.qingying0.im.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.qingying0.im.dto.MessageDTO;
 import com.github.qingying0.im.entity.Message;
